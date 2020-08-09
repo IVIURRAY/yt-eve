@@ -1,7 +1,7 @@
 import time
 import click
 
-from eve.service import weather
+from eve.service import svc_weather
 
 
 def convert_epoch_to(epoch, fmt):
@@ -14,7 +14,7 @@ def is_around_midday(epoch):
 
 class Context:
     def __init__(self, location):
-        self.weather = weather.Weather()
+        self.weather = svc_weather.Weather()
         self.location = location
 
 
@@ -53,9 +53,7 @@ def forecast(ctx):
         return str(data).center(14)
 
     click.echo(f' {to_display[0]["location"]} '.center(int(14 * 5.5), "="))
-    click.echo(
-        "\U0001F4C5 Date:" + "".join([formatter(convert_epoch_to(wx["time"], "%a %d %b")) for wx in to_display])
-    )
+    click.echo("\U0001F4C5 Date:" + "".join([formatter(convert_epoch_to(wx["time"], "%a %d %b")) for wx in to_display]))
     click.echo("\U0001F525 Temp:" + "".join([formatter(wx["temp"]) for wx in to_display]))
     click.echo("\U0001F32A Wind:" + "".join([formatter(wx["wind"]) for wx in to_display]))
     click.echo("\U0001F4A7 Rain:" + "".join([formatter(wx["rain"]) for wx in to_display]))
