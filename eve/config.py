@@ -7,3 +7,6 @@ WX_METRIC_WIND = "<miles_hour|km_hour|knots>"
 # Github API
 GITHUB_USER = "<USERNAME>"
 GITHUB_PASS = "<PASSWORD>"
+
+# Tidy
+TIDY_ROOT = None  # "</path/to/root>"

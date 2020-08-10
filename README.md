@@ -23,6 +23,7 @@ Override the relevant variables to fit your use case.
 Below is a list of the currently support API commands.
 
 * [`eve github`](#github) - Github utilities.
+* [`eve tidy`](#tidy) - Directory tidy.
 * [`eve weather`](#weather) - Weather information.
 
 ## Github
@@ -93,6 +94,40 @@ $ eve github delete test-repo
 Are you sure you want to delete https://github.com/IVIURRAY/test-repo? [y/N]: y
 Deleted: test-repo
 ```
+
+## Tidy
+The `tidy` command is used to tidy a driectory into sub-folders based on the file's extension.
+
+A detail explaniation can be found [here](https://www.youtube.com/watch?v=cmVt-ggdVz0).
+
+```commandline
+Usage: eve tidy [OPTIONS]
+
+  Tidy a directory
+
+Options:
+  -v, --verbose    Enable verbose logging
+  -p, --path TEXT  Directory path to tidy
+  --help           Show this message and exit.
+```
+
+___options___
+* '-v' '--verbose' - flag to enable verbose logging
+* '-p' '--path' - the path to tidy. This can be set by default in [`config.py`](/eve/config.py)
+
+***`tidy`***
+Tidy a given directory, defaults to what is set in [`config.py`](/eve/config.py)
+
+```commandline
+$ eve tidy -v
+============= Tidying 5 files in: /Users/SWEHaydn/Downloads =============
+'some_pdf.pdf' --> '/pdf/some_pdf.pdf'
+'some_txt.txt' --> '/txt/some_txt.txt'
+'some_jpg.jpg' --> '/jpg/some_jpg.jpg'
+'some_mp4.mp4' --> '/mp4/some_mp4.mp4'
+'some_py.py'   --> '/py/some_py.py'
+```
+
 
 ## Weather
 The `weather` commands use [OpenWeatherMap](https://openweathermap.org/) under the hood.

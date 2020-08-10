@@ -22,7 +22,7 @@ class Context:
 @click.option("-l", "--location", type=str, help="Weather at this location.")
 @click.pass_context
 def cli(ctx, location):
-    """Weather Information"""
+    """Weather information"""
     ctx.obj = Context(location)
 
 

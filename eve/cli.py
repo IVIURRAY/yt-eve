@@ -9,7 +9,7 @@ class ComplexCLI(click.MultiCommand):
         commands_folder = os.path.abspath(os.path.join(os.path.dirname(__file__), "commands"))
         for filename in os.listdir(commands_folder):
             if filename.endswith(".py") and filename.startswith("cmd_"):
-                commands.append(filename.lstrip("cmd_").rstrip(".py"))
+                commands.append(filename.replace("cmd_", "").replace(".py", ""))
 
         commands.sort()
         return commands
