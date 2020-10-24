@@ -4,7 +4,7 @@ Eve is a cli tool to bring together all my utilities into a centralised place.
 ## Tutorials
 Follow my YouTube tutorial series to follow along making this program.
 
-[![Youtube video series](/media/Thumbnail.jpg)](https://www.youtube.com/channel/UCQCjA6qUutAtWqkCA4Z36CQ)
+[![Youtube video series](/media/Thumbnail.jpg)](https://www.youtube.com/watch?v=Jr4QDJwwj60)
 
 ## How to Install
 1. `git clone https://github.com/IVIURRAY/yt-eve.git`
