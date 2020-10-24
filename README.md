@@ -22,9 +22,74 @@ Override the relevant variables to fit your use case.
 # API
 Below is a list of the currently support API commands.
 
+* [`eve football`](#football) - Football results.
 * [`eve github`](#github) - Github utilities.
 * [`eve tidy`](#tidy) - Directory tidy.
 * [`eve weather`](#weather) - Weather information.
+
+## Football
+The `football` command uses [openfootball](https://github.com/openfootball/football.json) under the hood.
+
+It is intended to be used for viewing football result and table information.
+
+Below, is a list of currently support commands.
+
+```commandline
+Usage: eve football [OPTIONS] COMMAND [ARGS]...
+
+  Football results
+
+Options:
+  --help  Show this message and exit.
+
+Commands:
+  table  View a table
+```
+
+***`table`***
+
+The table command can be used to view the current standing of a given league.
+(Defaults to English Permier league).
+
+```commandline
+Usage: eve football table [OPTIONS]
+
+  View a table
+
+Options:
+  -l, --league TEXT  The league to view - See codes at
+                     https://github.com/openfootball/football.json
+
+  --help             Show this message and exit.
+```
+
+___options___
+* `-l` `--league` - a league code to view the table for. Defautls to `en.1`.
+
+```commandline
+$ eve football table -l en.1
+Running Premier League 2020/21 table generator
+ 1st:            Everton FC           13 pts  7 gd 
+ 2nd:           Liverpool FC          10 pts  0 gd
+ 3rd:          Aston Villa FC         9 pts   9 gd
+ 4th:        Leicester City FC        9 pts   5 gd
+ 5th:            Arsenal FC           9 pts   2 gd
+ 6th:            Chelsea FC           8 pts   4 gd
+ 7th:       Tottenham Hotspur FC      7 pts   7 gd
+ 8th:         Leeds United FC         7 pts   1 gd
+ 9th:        Manchester City FC       7 pts   0 gd
+10th:          Southampton FC         7 pts  -1 gd
+11th:        Crystal Palace FC        7 pts  -2 gd
+12th:       Newcastle United FC       7 pts  -2 gd
+13th:        West Ham United FC       6 pts   4 gd
+14th:    Wolverhampton Wanderers FC   6 pts  -3 gd
+15th:       Manchester United FC      6 pts  -3 gd
+16th:    Brighton & Hove Albion FC    4 pts  -2 gd
+17th:       Sheffield United FC       1 pts  -5 gd
+18th:            Fulham FC            1 pts  -8 gd
+19th:     West Bromwich Albion FC     1 pts  -8 gd
+20th:            Burnley FC           0 pts  -5 gd
+```
 
 ## Github
 The `github` command uses [PyGithub](https://github.com/PyGithub/PyGithub) under the hood.
