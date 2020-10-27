@@ -1,5 +1,6 @@
 from github import Github
-from eve.config import GITHUB_USER, GITHUB_PASS
+
+from eve.config import GITHUB_PASS, GITHUB_USER
 
 
 class GithubUtility:

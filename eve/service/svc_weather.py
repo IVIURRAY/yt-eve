@@ -1,4 +1,5 @@
 from pyowm import OWM
+
 from eve.config import WX_API_KEY, WX_LOCATION, WX_METRIC_TEMP, WX_METRIC_WIND
 
 

@@ -24,7 +24,7 @@ def create(ctx, name, private, gitignore):
     """Create a github repo"""
     repo = ctx.obj.github.create_repo(name, private=private, gitignore=gitignore)
     click.echo(f"Created: {repo.name} at {repo.html_url}")
-    click.echo(f"Run the below command to add the repo as a remote...")
+    click.echo("Run the below command to add the repo as a remote...")
     click.echo(f"git remote add origin {repo.clone_url}")
 
 

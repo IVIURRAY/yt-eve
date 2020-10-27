@@ -18,7 +18,7 @@ There is a [`config.py`](/eve/config.py) that can be customised to support diffe
 Override the relevant variables to fit your use case.
 
 **DO NOT COMMIT ANY SENSITIVE INFORMATION!**
- 
+
 # API
 Below is a list of the currently support API commands.
 
@@ -69,7 +69,7 @@ ___options___
 ```commandline
 $ eve football table -l en.1
 Running Premier League 2020/21 table generator
- 1st:            Everton FC           13 pts  7 gd 
+ 1st:            Everton FC           13 pts  7 gd
  2nd:           Liverpool FC          10 pts  0 gd
  3rd:          Aston Villa FC         9 pts   9 gd
  4th:        Leicester City FC        9 pts   5 gd
@@ -96,7 +96,7 @@ The `github` command uses [PyGithub](https://github.com/PyGithub/PyGithub) under
 
 It is intended to be used for automating repetitive tasks around repository management.
 
-Below, is a list of currently support commands. 
+Below, is a list of currently support commands.
 
 ```commandline
 Usage: eve github [OPTIONS] COMMAND [ARGS]...
@@ -130,7 +130,7 @@ Options:
 
 ___options___
 * `-p` `--private` - set the repository to private or not. `eve github create <name> -p <True|False>`. Default to `False`.
-* `-i` `--gitignore` - initialise with a [`.gitignore`](https://github.com/github/gitignore) file. `eve github create <name> -i Python` 
+* `-i` `--gitignore` - initialise with a [`.gitignore`](https://github.com/github/gitignore) file. `eve github create <name> -i Python`
 
 ```commandline
 $ eve github create test-repo -i Python
@@ -198,7 +198,7 @@ $ eve tidy -v
 The `weather` commands use [OpenWeatherMap](https://openweathermap.org/) under the hood.
 
 It is intended to be used for querying and viewing weather information.
- 
+
 Below, is a list of currently supported commands.
 
 
@@ -260,8 +260,8 @@ Options:
 $ eve weather  forecast
 
 ================================= London GB =================================
-📅 Date:  Sat 1 Aug     Sun 2 Aug     Mon 3 Aug     Tue 4 Aug     Wed 5 Aug   
-🔥 Temp:    23.49         21.57          21.1         15.81         21.98     
-🌪 Wind:     9.24          9.64          7.96          8.77          12.8     
-💧 Rain:      {}            {}            {}            {}            {}   
+📅 Date:  Sat 1 Aug     Sun 2 Aug     Mon 3 Aug     Tue 4 Aug     Wed 5 Aug
+🔥 Temp:    23.49         21.57          21.1         15.81         21.98
+🌪 Wind:     9.24          9.64          7.96          8.77          12.8
+💧 Rain:      {}            {}            {}            {}            {}
 ```

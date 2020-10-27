@@ -1,4 +1,5 @@
 import time
+
 import click
 
 from eve.service import svc_weather

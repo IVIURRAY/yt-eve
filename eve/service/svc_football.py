@@ -16,11 +16,7 @@ def calculate_match_points(team1, team2, score1, score2):
 class Football:
     def table(self, league):
         year = int(datetime.now().strftime("%Y"))
-        season = (
-            f"{year}-{str(year+1)[-2:]}"
-            if datetime.now().month >= 8
-            else f"{year-1}-{str(year)[-2:]}"
-        )
+        season = f"{year}-{str(year+1)[-2:]}" if datetime.now().month >= 8 else f"{year-1}-{str(year)[-2:]}"
         results_url = f"https://raw.githubusercontent.com/openfootball/football.json/master/{season}/{league}.json"
         final_table = defaultdict(lambda: {"points": 0, "gd": 0})
 

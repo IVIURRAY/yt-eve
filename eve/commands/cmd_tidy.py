@@ -1,5 +1,6 @@
-import os
 import collections
+import os
+
 import click
 
 from eve.config import TIDY_ROOT
