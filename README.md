@@ -12,6 +12,17 @@ Follow my YouTube tutorial series to follow along making this program.
 3. `pip install .`
 4. `eve [cmd]` See [API](#API) section for commands to run.
 
+## How to contribute
+The EVE project welcomes all contributions!
+
+1. Fork this repo.
+2. Make a branch with to put your changes on.
+3. Add a file called `/eve/commands/cmd_<you_change>.py` and `/eve/service/svc_<your_change>.py`.
+    * Plenty of examples to take from already.
+    * Splitting CLI logic under `/cmd_<you_change>.py` and api logic under `/svc_<your_change>.py`.
+3. Submit a PR explaining your change and what it does, with examples!
+4. Thanks you in advance :thumbsup: !!
+
 ## Configuration
 There is a [`config.py`](/eve/config.py) that can be customised to support different use cases.
 
