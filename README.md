@@ -21,7 +21,7 @@ The EVE project welcomes all contributions!
     * Plenty of examples to take from already in those directories.
     * Splitting CLI logic under `/cmd_<you_change>.py` and api logic under `/svc_<your_change>.py`.
 3. Submit a PR explaining your change and what it does, with examples!
-4. Thanks you in advance :thumbsup: !!
+4. Thank you in advance :thumbsup: !!
 
 ## Configuration
 There is a [`config.py`](/eve/config.py) that can be customised to support different use cases.
