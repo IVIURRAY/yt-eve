@@ -14,7 +14,7 @@ class Context:
 
 
 @click.group()
-@click.option("-l", "--location", type=str, help="Weather at this location.", default=WX_LOCATION)
+@click.option("-l", "--location", type=str, help="Weather at this location.", default=WX_LOCATION, show_default=True)
 @click.pass_context
 def cli(ctx, location):
     """Weather information"""
