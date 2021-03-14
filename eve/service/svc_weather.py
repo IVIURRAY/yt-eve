@@ -1,12 +1,11 @@
 from pyowm import OWM
 
-from eve.config import WX_API_KEY, WX_LOCATION, WX_METRIC_TEMP, WX_METRIC_WIND
+from eve.config import WX_API_KEY, WX_METRIC_TEMP, WX_METRIC_WIND
 
 
 class Weather:
     def __init__(self, api_key=None, metric_temp=None, metric_wind=None):
         self.manager = OWM(api_key or WX_API_KEY).weather_manager()
-        self.default_location = WX_LOCATION
         self.metric_temp = metric_temp or WX_METRIC_TEMP
         self.metric_wind = metric_wind or WX_METRIC_WIND
 
@@ -23,8 +22,8 @@ class Weather:
             "time": weather.ref_time,
         }
 
-    def current(self, location=None):
-        observation = self.manager.weather_at_place(location or self.default_location)
+    def current(self, location):
+        observation = self.manager.weather_at_place(location)
         weather = observation.weather
 
         result = self.get_weather_data(weather)
@@ -32,8 +31,8 @@ class Weather:
 
         return result
 
-    def forecast(self, location=None, interval="3h"):
-        forecaster = self.manager.forecast_at_place(location or self.default_location, interval)
+    def forecast(self, location, interval="3h"):
+        forecaster = self.manager.forecast_at_place(location, interval)
         location = f"{forecaster.forecast.location.name} {forecaster.forecast.location.country}"
         return [
             {**self.get_weather_data(weather), **{"location": location}} for weather in forecaster.forecast.weathers
