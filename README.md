@@ -24,10 +24,10 @@ The EVE project welcomes all contributions!
 4. Thanks you in advance :thumbsup: !!
 
 ## Configuration
-In order to use all supported commands, you'd need to provide your personal preferences/credentials.
-There are two ways it can be done
+In order to use all supported commands, you would need to provide your personal preferences/credentials.
+There are two ways it can be done, see below.
 
-1. Override default parameters in `~/eve/config.py` (**Do not commit these changes**)
+1. Override default parameters in [`~/eve/config.py`](/eve/config.py) (**Do not commit these changes**)
 `os.environ.get("ENV", "default")` reads the env var `"ENV"` and takes `"default"` if this variable is not set.
 
  config.py example
@@ -372,7 +372,7 @@ ___options___
 ___example___
 ```
 $ eve crypto -c "ADA" -ccy "RUB" price
-  ============= ADA (CARDANO) PRICE============
+  ============= ADA (CARDANO) PRICE ============
   💱 Price:         78.6613 RUB
   💰 Market cap:    2,513,096,409,058.2915 RUB
   🏦 TTL supply:    45,000,000,000
@@ -383,7 +383,7 @@ it is also possible to set another crypto currency as destination currency
 
 ```
 eve crypto -c "BTC" -ccy "ADA" price
-============= BTC (BITCOIN) PRICE============
+============= BTC (BITCOIN) PRICE ============
 💱 Price:         56,273.0083 ADA
 💰 Market cap:    1,049,717,372,134.1301 ADA
 🏦 TTL supply:    18,654,012

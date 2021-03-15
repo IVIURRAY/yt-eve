@@ -28,7 +28,7 @@ def price(ctx):
     locale.setlocale(locale.LC_ALL, "")
     result = ctx.obj.crypto.price(coin=ctx.obj.coin, currency=ctx.obj.currency)
     price_value, price_currency = result["price"].split(" ")
-    click.echo(f' {result["symbol"]} ({result["name"].upper()}) PRICE'.center(45, "="))
+    click.echo(f' {result["symbol"]} ({result["name"].upper()}) PRICE '.center(45, "="))
     click.echo(f'\U0001F4B1 Price:         {f.format_float_from_str(price_value, 4)} {price_currency}')
     click.echo(f'\U0001F4B0 Market cap:    {f.format_float_from_str(result["market_cap"], 4)} {price_currency}'),
     click.echo(f'\U0001F3E6 TTL supply:    {f.format_int_from_str(result["total_supply"])}')
