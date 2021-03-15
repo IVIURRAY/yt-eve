@@ -25,7 +25,35 @@ The EVE project welcomes all contributions!
 
 ## Configuration
 In order to use all supported commands, you'd need to provide your personal preferences/credentials.
-For convenience, create ~/.eve_config file with the following content, examples in the comments
+There are two ways it can be done
+
+1. Override default parameters in `~/eve/config.py` (**Do not commit these changes**)
+`os.environ.get("ENV", "default")` reads the env var `"ENV"` and takes `"default"` if this variable is not set.
+
+ config.py example
+```
+import os
+
+# Weather API
+WX_API_KEY = os.environ.get("WX_API_KEY", "e5209303a83828u2eako7c849302d2j2")
+WX_LOCATION = os.environ.get("WX_LOCATION", "London")
+WX_METRIC_TEMP = os.environ.get("WX_METRIC_TEMP", "celsius")
+WX_METRIC_WIND = os.environ.get("WX_METRIC_WIND", "km_hour")
+
+# Github API
+GITHUB_USER = os.environ.get("GITHUB_USER", "johndoe")
+GITHUB_PASS = os.environ.get("GITHUB_PASS", "superSecretPass")
+
+# Tidy
+TIDY_ROOT = os.environ.get("TIDY_ROOT", "/User/johndoe/Downloads")  # "</path/to/root>"
+
+# Crypto
+COIN_MARKET_CAP_API_KEY = os.environ.get("COIN_MARKET_CAP_API_KEY", "5i3qe43d-2de2-2eid-63b3-9403920395d2")
+DEFAULT_COIN = os.environ.get("DEFAULT_COIN", "BTC")
+CURRENCY = os.environ.get("CURRENCY", "GBP")
+```
+2. Set env variables in your shell.
+For convenience, create `~/.eve_config` file with the following content, examples in the comments
 ```
 # Weather API
 export WX_API_KEY=you_personal_open_weather_api_key # e5209303a83828u2eako7c849302d2j2
@@ -43,7 +71,7 @@ export TIDY_ROOT="</path/to/root>" # /User/johndoe/Downloads
 #Crypto
 export COIN_MARKET_CAP_API_KEY=your_personal_coinmarket_cap_api_key # 5i3qe43d-2de2-2eid-63b3-9403920395d2
 export DEFAULT_COIN=your_preferred_default_crypto_currency_symbol # BTC
-export DESTINATION_CURRENCY=your_preferred_default_currency_to_convert_to # EUR
+export CURRENCY=your_preferred_default_currency_to_convert_to # EUR
 ```
 
 export env variables in this file on the startup of the shell.
@@ -316,7 +344,7 @@ Usage: eve crypto [OPTIONS] COMMAND [ARGS]...
 
 Options:
   -c, --coin TEXT                 Coin  [default: BTC]
-  -d, --destination-currency TEXT
+  -ccy, --currency TEXT
                                   destination  [default: EUR]
   --help                          Show this message and exit.
 
@@ -339,11 +367,11 @@ $ eve crypto price
 
 ___options___
 * `-c` `--coin` - override the default coin. `eve crypto -c <mycoin> price`
-* `-d` `--destination` - overrides the default destination `eve cripto -d <mycurrency> price`
+* `-ccy` `--currency` - overrides the default destination `eve cripto -ccy <mycurrency> price`
 
 ___example___
 ```
-$ eve crypto -c "ADA" -d "RUB" price
+$ eve crypto -c "ADA" -ccy "RUB" price
   ============= ADA (CARDANO) PRICE============
   💱 Price:         78.6613 RUB
   💰 Market cap:    2,513,096,409,058.2915 RUB
@@ -354,7 +382,7 @@ $ eve crypto -c "ADA" -d "RUB" price
 it is also possible to set another crypto currency as destination currency
 
 ```
-eve crypto -c "BTC" -d "ADA" price
+eve crypto -c "BTC" -ccy "ADA" price
 ============= BTC (BITCOIN) PRICE============
 💱 Price:         56,273.0083 ADA
 💰 Market cap:    1,049,717,372,134.1301 ADA

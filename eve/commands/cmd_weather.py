@@ -3,7 +3,7 @@ import time
 import click
 
 from eve.service import svc_weather
-from eve.utilities import formatting as f
+from eve.utilities import utils as f
 from eve.config import WX_LOCATION
 
 
