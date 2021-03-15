@@ -1,3 +1,4 @@
 click==7.1.2
 PyGithub==1.52
 pyowm==3.0.0
+python-coinmarketcap==0.2
