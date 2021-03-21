@@ -51,6 +51,10 @@ TIDY_ROOT = os.environ.get("TIDY_ROOT", "/User/johndoe/Downloads")  # "</path/to
 COIN_MARKET_CAP_API_KEY = os.environ.get("COIN_MARKET_CAP_API_KEY", "5i3qe43d-2de2-2eid-63b3-9403920395d2")
 DEFAULT_COIN = os.environ.get("DEFAULT_COIN", "BTC")
 CURRENCY = os.environ.get("CURRENCY", "GBP")
+
+# Calendar
+DEFAULT_EVENTS_NUMBER = os.environ.get("DEFAULT_EVENTS_NUMBER", "10")
+PATH_TO_CRED = os.environ.get("PATH_TO_CALENDAR_API_CRED", "/Users/john/cred/credentials.json")
 ```
 2. Set env variables in your shell.
 For convenience, create `~/.eve_config` file with the following content, examples in the comments
@@ -72,6 +76,10 @@ export TIDY_ROOT="</path/to/root>" # /User/johndoe/Downloads
 export COIN_MARKET_CAP_API_KEY=your_personal_coinmarket_cap_api_key # 5i3qe43d-2de2-2eid-63b3-9403920395d2
 export DEFAULT_COIN=your_preferred_default_crypto_currency_symbol # BTC
 export CURRENCY=your_preferred_default_currency_to_convert_to # EUR
+
+#Calendar
+export DEFAULT_EVENTS_NUMBER=10
+export PATH_TO_CALENDAR_API_CRED="/Users/john/creds/credentials.json"
 ```
 
 export env variables in this file on the startup of the shell.
@@ -89,6 +97,7 @@ Below is a list of the currently support API commands.
 * [`eve tidy`](#tidy) - Directory tidy.
 * [`eve weather`](#weather) - Weather information.
 * [`eve crypto`](#crypto) - Crypto currency information.
+* [`eve cal`](#calendar) - Google calendar utility
 
 ## Football
 The `football` command uses [openfootball](https://github.com/openfootball/football.json) under the hood.
@@ -112,7 +121,7 @@ Commands:
 ***`table`***
 
 The table command can be used to view the current standing of a given league.
-(Defaults to English Permier league).
+(Defaults to English Premier league).
 
 ```commandline
 Usage: eve football table [OPTIONS]
@@ -370,7 +379,7 @@ ___options___
 * `-ccy` `--currency` - overrides the default destination `eve cripto -ccy <mycurrency> price`
 
 ___example___
-```
+```commandline
 $ eve crypto -c "ADA" -ccy "RUB" price
   ============= ADA (CARDANO) PRICE ============
   💱 Price:         78.6613 RUB
@@ -381,11 +390,54 @@ $ eve crypto -c "ADA" -ccy "RUB" price
 
 it is also possible to set another crypto currency as destination currency
 
-```
-eve crypto -c "BTC" -ccy "ADA" price
+```commandline
+$ eve crypto -c "BTC" -ccy "ADA" price
 ============= BTC (BITCOIN) PRICE ============
 💱 Price:         56,273.0083 ADA
 💰 Market cap:    1,049,717,372,134.1301 ADA
 🏦 TTL supply:    18,654,012
 📈 24H change:    1.8 %
 ```
+
+## Calendar
+
+The `cal` command uses [Google Calendar Api](https://developers.google.com/calendar)
+ 
+Intended to be used for getting info about upcoming events in the given calendar
+
+```commandline
+$ eve cal --help
+Usage: eve cal [OPTIONS] COMMAND [ARGS]...
+
+  Google calendar interaction
+
+Options:
+  --help  Show this message and exit.
+
+Commands:
+  events  Display number of upcoming events in google calendar
+```
+
+___example___
+```commandline
+$ eve cal events
+ =========Retrospective team Avengers=========
+ 👨 Organizer:     tony.stark@gmail.com
+ ⏱ Starts in:     In Progress
+ ⏳ Duration:      60 min
+ ✅ Status:        Confirmed
+ ====================FriYay===================
+ 👨 Organizer:     jane.doe@gmail.com
+ ⏱ Starts in:     33
+ ⏳ Duration:      60 min
+ ✅ Status:        Confirmed
+```
+
+#### Accessing google calendar API
+
+In order to access api you'd need to go to the [quickstart](https://developers.google.com/calendar/quickstart/python)
+and click `Enable the Google Calendar API`
+
+After that, move the downloaded file to the desired directory.
+Once that is done, either change `config.py` specifying the directory as a second parameter in `os.environ.get()` for 
+`PATH_TO_CRED` variable or export `PATH_TO_CALENDAR_API_CRED` in `.eve_config` file.
