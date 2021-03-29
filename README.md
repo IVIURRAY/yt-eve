@@ -421,12 +421,12 @@ Commands:
 ___example___
 ```commandline
 $ eve cal events
- =========Retrospective team Avengers=========
+ ========= Retrospective team Avengers =========
  👨 Organizer:     tony.stark@gmail.com
  ⏱ Starts in:     In Progress
  ⏳ Duration:      60 min
  ✅ Status:        Confirmed
- ====================FriYay===================
+ ==================== FriYay ===================
  👨 Organizer:     jane.doe@gmail.com
  ⏱ Starts in:     33
  ⏳ Duration:      60 min

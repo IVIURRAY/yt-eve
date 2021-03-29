@@ -21,7 +21,7 @@ def events(ctx):
     """Display number of upcoming events in google calendar"""
     result = ctx.obj.calendar.next()
     for e in result:
-        click.echo(f'{e["name"]}'.center(45, "="))
+        click.echo(f' {e["name"]} '.center(45, "="))
         click.echo(f'\U0001F468 Organizer:     {e["organizer"]}'),
         click.echo(f'\U000023F1  Starts in:     {e["starts_in"]}')
         click.echo(f'\U000023F3 Duration:      {e["duration"]}')

@@ -7,7 +7,7 @@ from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 
-from eve.config import PATH_TO_CRED, DEFAULT_EVENTS_NUMBER
+from eve.config import PATH_TO_CALENDAR_API_CRED, DEFAULT_CALENDAR_EVENTS_NUMBER
 from ..utilities import utils as f
 
 
@@ -26,7 +26,7 @@ def build_service():
         else:
             flow = InstalledAppFlow.from_client_secrets_file(
                 # path should contain file itself, e.g '/Users/john/cred/credentials.json
-                PATH_TO_CRED, SCOPES)
+                PATH_TO_CALENDAR_API_CRED, SCOPES)
             creds = flow.run_local_server(port=0)
         # Save the credentials for the next run
         with open('../../token.json', 'w') as token:
@@ -43,7 +43,7 @@ class Calendar:
     def next(self):
         now = datetime.datetime.now(tz=pytz.UTC).isoformat()  # Google calendar api expects date in UTC
         events_result = self.service.events().list(calendarId='primary', timeMin=now,
-                                                   maxResults=DEFAULT_EVENTS_NUMBER, singleEvents=True,
+                                                   maxResults=DEFAULT_CALENDAR_EVENTS_NUMBER, singleEvents=True,
                                                    orderBy='startTime').execute()
         events = []
         for e in events_result.get('items', []):
