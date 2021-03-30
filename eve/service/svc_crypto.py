@@ -1,4 +1,4 @@
-from coinmarketcapapi import CoinMarketCapAPI, CoinMarketCapAPIError
+from coinmarketcapapi import CoinMarketCapAPI
 from eve.config import COIN_MARKET_CAP_API_KEY
 
 
