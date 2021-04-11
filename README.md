@@ -339,7 +339,8 @@ $ eve weather forecast
 
 
 ## Crypto
-The `crypto` commands use [CoinMarketCapApi](https://coinmarketcap.com/api/documentation/v1/) under the hood.
+The `crypto` commands use [CoinMarketCapApi](https://coinmarketcap.com/api/documentation/v1/) or 
+[Gecko](https://github.com/man-c/pycoingecko) under the hood.
 
 It is intended to be used for querying current price for given crypto currency.
 
@@ -367,7 +368,7 @@ The `price` command gives you information about the price of the coin.
 
 ```commandline
 $ eve crypto price
-  ============= BTC (BITCOIN) PRICE============
+  ============= BTC (BITCOIN) PRICE ============
   💱 Price:         50,413.6830 EUR
   💰 Market cap:    940,417,447,517.0726 EUR
   🏦 TTL supply:    18,654,012
