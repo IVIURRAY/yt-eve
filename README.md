@@ -24,11 +24,70 @@ The EVE project welcomes all contributions!
 4. Thank you in advance :thumbsup: !!
 
 ## Configuration
-There is a [`config.py`](/eve/config.py) that can be customised to support different use cases.
+In order to use all supported commands, you would need to provide your personal preferences/credentials.
+There are two ways it can be done, see below.
 
-Override the relevant variables to fit your use case.
+1. Override default parameters in [`~/eve/config.py`](/eve/config.py) (**Do not commit these changes**)
+`os.environ.get("ENV", "default")` reads the env var `"ENV"` and takes `"default"` if this variable is not set.
 
-**DO NOT COMMIT ANY SENSITIVE INFORMATION!**
+ config.py example
+```
+import os
+
+# Weather API
+WX_API_KEY = os.environ.get("WX_API_KEY", "e5209303a83828u2eako7c849302d2j2")
+WX_LOCATION = os.environ.get("WX_LOCATION", "London")
+WX_METRIC_TEMP = os.environ.get("WX_METRIC_TEMP", "celsius")
+WX_METRIC_WIND = os.environ.get("WX_METRIC_WIND", "km_hour")
+
+# Github API
+GITHUB_USER = os.environ.get("GITHUB_USER", "johndoe")
+GITHUB_PASS = os.environ.get("GITHUB_PASS", "superSecretPass")
+
+# Tidy
+TIDY_ROOT = os.environ.get("TIDY_ROOT", "/User/johndoe/Downloads")  # "</path/to/root>"
+
+# Crypto
+COIN_MARKET_CAP_API_KEY = os.environ.get("COIN_MARKET_CAP_API_KEY", "5i3qe43d-2de2-2eid-63b3-9403920395d2")
+DEFAULT_COIN = os.environ.get("DEFAULT_COIN", "BTC")
+CURRENCY = os.environ.get("CURRENCY", "GBP")
+
+# Calendar
+DEFAULT_EVENTS_NUMBER = os.environ.get("DEFAULT_EVENTS_NUMBER", "10")
+PATH_TO_CRED = os.environ.get("PATH_TO_CALENDAR_API_CRED", "/Users/john/cred/credentials.json")
+```
+2. Set env variables in your shell.
+For convenience, create `~/.eve_config` file with the following content, examples in the comments
+```
+# Weather API
+export WX_API_KEY=you_personal_open_weather_api_key # e5209303a83828u2eako7c849302d2j2
+export WX_LOCATION=your_preferred_default_location # London
+export WX_METRIC_TEMP=your_preferred_temperature_units # celsius ( <celsius|fahrenheit|kelvin> )
+export WX_METRIC_WIND=your_preferred_wind_units # km_hour ( <miles_hour|km_hour|knots> )
+
+#Github API
+export GITHUB_USER=your_github_username # johndoe
+export GITHUB_PASS=your_github_password # supersecretpassword
+
+# Tidy
+export TIDY_ROOT="</path/to/root>" # /User/johndoe/Downloads
+
+#Crypto
+export COIN_MARKET_CAP_API_KEY=your_personal_coinmarket_cap_api_key # 5i3qe43d-2de2-2eid-63b3-9403920395d2
+export DEFAULT_COIN=your_preferred_default_crypto_currency_symbol # BTC
+export CURRENCY=your_preferred_default_currency_to_convert_to # EUR
+
+#Calendar
+export DEFAULT_EVENTS_NUMBER=10
+export PATH_TO_CALENDAR_API_CRED="/Users/john/creds/credentials.json"
+```
+
+export env variables in this file on the startup of the shell.
+Depending on what shell you use, add this line to `~/.zshrc`; `~/.bash_profile`, `etc`
+```
+source ~/.eve_config
+```
+restart your shell
 
 # API
 Below is a list of the currently support API commands.
@@ -37,6 +96,8 @@ Below is a list of the currently support API commands.
 * [`eve github`](#github) - Github utilities.
 * [`eve tidy`](#tidy) - Directory tidy.
 * [`eve weather`](#weather) - Weather information.
+* [`eve crypto`](#crypto) - Crypto currency information.
+* [`eve cal`](#calendar) - Google calendar utility
 
 ## Football
 The `football` command uses [openfootball](https://github.com/openfootball/football.json) under the hood.
@@ -60,7 +121,7 @@ Commands:
 ***`table`***
 
 The table command can be used to view the current standing of a given league.
-(Defaults to English Permier league).
+(Defaults to English Premier league).
 
 ```commandline
 Usage: eve football table [OPTIONS]
@@ -216,10 +277,10 @@ Below, is a list of currently supported commands.
 ```commandline
 Usage: eve weather [OPTIONS] COMMAND [ARGS]...
 
-  Weather Information
+  Weather information
 
 Options:
-  -l, --location TEXT  Weather at this location.
+  -l, --location TEXT  Weather at this location.  [default: London]
   --help               Show this message and exit.
 
 Commands:
@@ -268,11 +329,115 @@ Options:
 ```
 
 ```commandline
-$ eve weather  forecast
-
-================================= London GB =================================
-📅 Date:  Sat 1 Aug     Sun 2 Aug     Mon 3 Aug     Tue 4 Aug     Wed 5 Aug
-🔥 Temp:    23.49         21.57          21.1         15.81         21.98
-🌪 Wind:     9.24          9.64          7.96          8.77          12.8
-💧 Rain:      {}            {}            {}            {}            {}
+$ eve weather forecast
+  ================================== Paris FR =================================
+  📅 Date:  Mon 15 Mar    Tue 16 Mar    Wed 17 Mar    Thu 18 Mar    Fri 19 Mar
+  🔥 Temp:    11.79         10.88         10.56          9.27          7.56
+  🌪 Wind:    23.62          8.24         22.03         29.02         24.12
+  💧 Rain: {'3h': 0.36}       No            No       {'3h': 0.4}        No
 ```
+
+
+## Crypto
+The `crypto` commands use [CoinMarketCapApi](https://coinmarketcap.com/api/documentation/v1/) under the hood.
+
+It is intended to be used for querying current price for given crypto currency.
+
+Below, is a list of currently supported commands.
+
+
+```commandline
+Usage: eve crypto [OPTIONS] COMMAND [ARGS]...
+
+  Coin price for a given coin
+
+Options:
+  -c, --coin TEXT                 Coin  [default: BTC]
+  -ccy, --currency TEXT
+                                  destination  [default: EUR]
+  --help                          Show this message and exit.
+
+Commands:
+  price
+```
+
+***`price`***
+
+The `price` command gives you information about the price of the coin.
+
+```commandline
+$ eve crypto price
+  ============= BTC (BITCOIN) PRICE============
+  💱 Price:         50,413.6830 EUR
+  💰 Market cap:    940,417,447,517.0726 EUR
+  🏦 TTL supply:    18,654,012
+  📈 24H change:    -1.7 %
+```
+
+___options___
+* `-c` `--coin` - override the default coin. `eve crypto -c <mycoin> price`
+* `-ccy` `--currency` - overrides the default destination `eve cripto -ccy <mycurrency> price`
+
+___example___
+```commandline
+$ eve crypto -c "ADA" -ccy "RUB" price
+  ============= ADA (CARDANO) PRICE ============
+  💱 Price:         78.6613 RUB
+  💰 Market cap:    2,513,096,409,058.2915 RUB
+  🏦 TTL supply:    45,000,000,000
+  📈 24H change:    -3.4 %
+```
+
+it is also possible to set another crypto currency as destination currency
+
+```commandline
+$ eve crypto -c "BTC" -ccy "ADA" price
+============= BTC (BITCOIN) PRICE ============
+💱 Price:         56,273.0083 ADA
+💰 Market cap:    1,049,717,372,134.1301 ADA
+🏦 TTL supply:    18,654,012
+📈 24H change:    1.8 %
+```
+
+## Calendar
+
+The `cal` command uses [Google Calendar Api](https://developers.google.com/calendar)
+ 
+Intended to be used for getting info about upcoming events in the given calendar
+
+```commandline
+$ eve cal --help
+Usage: eve cal [OPTIONS] COMMAND [ARGS]...
+
+  Google calendar interaction
+
+Options:
+  --help  Show this message and exit.
+
+Commands:
+  events  Display number of upcoming events in google calendar
+```
+
+___example___
+```commandline
+$ eve cal events
+ ========= Retrospective team Avengers =========
+ 👨 Organizer:     tony.stark@gmail.com
+ ⏱ Starts in:     In Progress
+ ⏳ Duration:      60 min
+ ✅ Status:        Confirmed
+ ==================== FriYay ===================
+ 👨 Organizer:     jane.doe@gmail.com
+ ⏱ Starts in:     33
+ ⏳ Duration:      60 min
+ ✅ Status:        Confirmed
+```
+
+#### Accessing google calendar API
+
+In order to access api you'd need to go to the [quickstart](https://developers.google.com/calendar/quickstart/python)
+and click `Enable the Google Calendar API`
+
+After that, move the downloaded file to the desired directory.
+Once that is done, either change `config.py` specifying the directory as a second parameter in `os.environ.get()` for 
+`PATH_TO_CRED` variable or export `PATH_TO_CALENDAR_API_CRED` in `.eve_config` file.
