@@ -8,16 +8,11 @@ class Context:
         self.quote = svc_quote.Quote()
 
 
-@click.group()
+@click.command()
 @click.option('-s', '--search', type=str, help='Searchstring for random quotes.')
 @click.pass_context
 def cli(ctx, search):
     """Output quotes."""
     ctx.obj = Context(search)
-
-
-@cli.command()
-@click.pass_context
-def random(ctx):
-    result = ctx.obj.quote.random(search=ctx.obj.search)
+    result = ctx.obj.quote.random(search=search)
     click.echo(result)
