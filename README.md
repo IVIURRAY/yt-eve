@@ -447,24 +447,16 @@ Once that is done, either change `config.py` specifying the directory as a secon
 ## Quote
 The `quote` command uses the [quote module](https://github.com/maxhumber/quote) which is a python wrapper for the Goodreads Quote API.
 
-Below is a list of currently supported commands.
+Below is a list of currently supported options:
 
 ```commandline
-Usage: eve quote [OPTIONS] COMMAND [ARGS]...
+Usage: eve quote [OPTIONS]
 
   Output quotes.
    
 Options:
   -s, --search TEXT Searchstring for random quotes.
   -- help           Show this message and exit.
-
-Commands:
-  random
 ```
 
-***`random`***
-
-The random command can be used to output one single quote from a book or an author.
-(Defaults to 'Tolkien').
-
-The default searchsting can be overridden by using the `search` option. For excample: `eve quote -s 'Harry Potter' random`
+The default searchsting ('Tolkien') can be overridden by using the `search` option. For excample: `eve quote -s 'Harry Potter'`
