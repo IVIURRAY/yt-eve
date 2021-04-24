@@ -97,7 +97,8 @@ Below is a list of the currently support API commands.
 * [`eve tidy`](#tidy) - Directory tidy.
 * [`eve weather`](#weather) - Weather information.
 * [`eve crypto`](#crypto) - Crypto currency information.
-* [`eve cal`](#calendar) - Google calendar utility
+* [`eve cal`](#calendar) - Google calendar utility.
+* [`eve quote`](#quote) - Generate random book-quotes.
 
 ## Football
 The `football` command uses [openfootball](https://github.com/openfootball/football.json) under the hood.
@@ -442,3 +443,20 @@ and click `Enable the Google Calendar API`
 After that, move the downloaded file to the desired directory.
 Once that is done, either change `config.py` specifying the directory as a second parameter in `os.environ.get()` for 
 `PATH_TO_CRED` variable or export `PATH_TO_CALENDAR_API_CRED` in `.eve_config` file.
+
+## Quote
+The `quote` command uses the [quote module](https://github.com/maxhumber/quote) which is a python wrapper for the Goodreads Quote API.
+
+Below is a list of currently supported options:
+
+```commandline
+Usage: eve quote [OPTIONS]
+
+  Output quotes.
+   
+Options:
+  -s, --search TEXT Searchstring for random quotes.
+  -- help           Show this message and exit.
+```
+
+The default searchsting ('Tolkien') can be overridden by using the `search` option. For excample: `eve quote -s 'Harry Potter'`
