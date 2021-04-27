@@ -12,6 +12,9 @@ Follow my YouTube tutorial series to follow along making this program.
 3. `pip install .`
 4. `eve [cmd]` See [API](#API) section for commands to run.
 
+### Testing
+Run tests with `pytest` command
+
 ## How to Contribute
 The EVE project welcomes all contributions!
 
