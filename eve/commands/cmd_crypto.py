@@ -1,8 +1,11 @@
-import click
 import locale
-from eve.service import svc_crypto
+
+import click
+
 from eve.config import DEFAULT_COIN, CURRENCY
+from eve.service import svc_crypto
 from eve.utilities import utils
+
 
 class Context:
     def __init__(self, coin, currency):
