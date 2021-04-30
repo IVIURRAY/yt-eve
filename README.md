@@ -237,7 +237,7 @@ Deleted: test-repo
 ```
 
 ## Tidy
-The `tidy` command is used to tidy a driectory into sub-folders based on the file's extension.
+The `tidy` command is used to tidy a directory into sub-folders based on the file's extension.
 
 A detail explaniation can be found [here](https://www.youtube.com/watch?v=cmVt-ggdVz0).
 
