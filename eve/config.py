@@ -1,4 +1,5 @@
 import os
+import pathlib
 
 # Weather API
 WX_API_KEY = os.environ.get("WX_API_KEY", "<YOUR-API-KEY>")
@@ -24,3 +25,6 @@ PATH_TO_CALENDAR_API_CRED = os.environ.get("PATH_TO_CALENDAR_API_CRED", "<PATH-T
 
 # Quote Config
 QU_SEARCH = 'Tolkien'
+
+# Note
+NOTE_DEFAULT_PATH = os.path.join(pathlib.Path.home(), '.eve_note.json')
