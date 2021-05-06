@@ -49,28 +49,5 @@ def delete(ctx, key):
 @click.pass_context
 def edit(ctx, key, due_date=None, priority=None, note_text=None):
     """Edit notes."""
-    # If due_date, priority and note_text is given
-    if due_date is not None and priority is not None and note_text is not None:
-        ctx.obj.note.edit(key=str(key), DueDate=due_date, Priority=priority, NoteText=note_text)
-    # If due_date and priority is given
-    elif due_date is not None and priority is not None:
-        ctx.obj.note.edit(key=str(key), DueDate=due_date, Priority=priority)
-    # If due_date and note_text is given
-    elif due_date is not None and note_text is not None:
-        ctx.obj.note.edit(key=str(key), DueDate=due_date, NoteText=note_text)
-    # If due_date is given
-    elif due_date is not None:
-        ctx.obj.note.edit(key=str(key), DueDate=due_date)
-    # If priority and note_text is given
-    elif priority is not None and note_text is not None:
-        ctx.obj.note.edit(key=str(key), Priority=priority, NoteText=note_text)
-    # If priority is given
-    elif priority is not None:
-        ctx.obj.note.edit(key=str(key), Priority=priority)
-    # If note_text is given
-    elif note_text is not None:
-        ctx.obj.note.edit(key=str(key), NoteText=note_text)
-    # If nothing is given
-    else:
-        ctx.obj.note.edit(key=str(key))
+    ctx.obj.note.edit(key=str(key), DueDate=due_date, Priority=priority, NoteText=note_text)
     ctx.obj.note.output()
