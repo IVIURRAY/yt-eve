@@ -12,6 +12,9 @@ Follow my YouTube tutorial series to follow along making this program.
 3. `pip install .`
 4. `eve [cmd]` See [API](#API) section for commands to run.
 
+### Testing
+Run tests with `pytest` command
+
 ## How to Contribute
 The EVE project welcomes all contributions!
 
@@ -99,6 +102,7 @@ Below is a list of the currently support API commands.
 * [`eve crypto`](#crypto) - Crypto currency information.
 * [`eve cal`](#calendar) - Google calendar utility.
 * [`eve quote`](#quote) - Generate random book-quotes.
+* [`eve note`](#note) - A small notebook with due date and priority functionality
 
 ## Football
 The `football` command uses [openfootball](https://github.com/openfootball/football.json) under the hood.
@@ -234,7 +238,7 @@ Deleted: test-repo
 ```
 
 ## Tidy
-The `tidy` command is used to tidy a driectory into sub-folders based on the file's extension.
+The `tidy` command is used to tidy a directory into sub-folders based on the file's extension.
 
 A detail explaniation can be found [here](https://www.youtube.com/watch?v=cmVt-ggdVz0).
 
@@ -340,7 +344,7 @@ $ eve weather forecast
 
 
 ## Crypto
-The `crypto` commands use [CoinMarketCapApi](https://coinmarketcap.com/api/documentation/v1/) or 
+The `crypto` commands use [CoinMarketCapApi](https://coinmarketcap.com/api/documentation/v1/) or
 [Gecko](https://github.com/man-c/pycoingecko) under the hood.
 
 It is intended to be used for querying current price for given crypto currency.
@@ -404,7 +408,7 @@ $ eve crypto -c "BTC" -ccy "ADA" price
 ## Calendar
 
 The `cal` command uses [Google Calendar Api](https://developers.google.com/calendar)
- 
+
 Intended to be used for getting info about upcoming events in the given calendar
 
 ```commandline
@@ -441,7 +445,7 @@ In order to access api you'd need to go to the [quickstart](https://developers.g
 and click `Enable the Google Calendar API`
 
 After that, move the downloaded file to the desired directory.
-Once that is done, either change `config.py` specifying the directory as a second parameter in `os.environ.get()` for 
+Once that is done, either change `config.py` specifying the directory as a second parameter in `os.environ.get()` for
 `PATH_TO_CRED` variable or export `PATH_TO_CALENDAR_API_CRED` in `.eve_config` file.
 
 ## Quote
@@ -453,10 +457,104 @@ Below is a list of currently supported options:
 Usage: eve quote [OPTIONS]
 
   Output quotes.
-   
+
 Options:
   -s, --search TEXT Searchstring for random quotes.
   -- help           Show this message and exit.
 ```
 
 The default searchsting ('Tolkien') can be overridden by using the `search` option. For excample: `eve quote -s 'Harry Potter'`
+
+## Note
+The `note` command can be used to store some small notes that are ordered by a due date and priority (if provided by the user).
+
+On the first execution, a JSON-file is created in the users home-path to store the notes. The path can be changed in the config.py.
+
+During creation of the file it is populated with some demo-entries. The entries are ordered by due date (first) and priority (second). If a due date is reached it is printed out with a highlighted color.
+
+```commandline
+Usage: eve note [OPTIONS] COMMAND [ARGS]
+
+  Make notes.
+
+Options:
+  -- help           Show this message and exit.
+
+Commands:
+  add     Add notes.
+  delete  Delete notes.
+  edit    Edit notes.
+  show    Show table with notes.
+```
+
+### Add
+```commandline
+Usage: eve note add [OPTIONS]
+
+  Add notes.
+
+Options:
+  -t, --note_text TEXT    Note text. [required]
+  -d, --due_date TEXT     Due date (YYYY-MM-DD).
+  -p, --priority INTEGER  Priority.
+  -- help                 Show this message and exit.
+```
+
+The only required option is the note text. For example `eve note add -t "This is a test."`
+
+For more detailed entries, use the other options as well. For example `eve note add -t "This is a test." -d "2021-10-01" -p 5`.
+
+All notes get a (integer) key and a creation date by default. Not provided options get a `None` value by default.
+
+### Delete
+```commandline
+Usage: eve note delete [OPTIONS]
+
+  Delete notes.
+
+Options:
+  -k, --key INTEGER  Key of the note. [required]
+  -- help                 Show this message and exit.
+```
+Notes are deleted by providing their (integer) key. For example `eve note delete -k 3`.
+
+After deleting a note, all other notes get newly enumerated and therefore a new key value.
+
+### Edit
+```commandline
+Usage: eve note edit [OPTIONS]
+
+  Edit notes.
+
+Options:
+  -k, --key INTEGER       Key of the note. [required]
+  -d, --due_date TEXT     Due date (YYYY-MM-DD).
+  -p, --priority INTEGER  Priority.
+  -t, --note_text TEXT    Note text.
+  -- help                 Show this message and exit.
+```
+Notes are edited by their (integer) key. For example `eve note edit -k 4 -t "Edited entry"`.
+
+After editing a note the EditDate value is overwritten with the current date.
+
+### Show
+```commandline
+Usage: eve note show [OPTIONS]
+
+  Show table with notes.
+
+Options:
+  -- help  Show this message and exit.
+```
+Surely the simplest command with no "real" options. It just shows all notes **ordered by due date and priority** in a nicely formated table.
+
+The show command is also executed automaticaly after adding, deleting or editing a note.
+```
++-----------------------------------------------------------------------------------+
+| Key | CreationDate | EditDate   | DueDate    | Priority | NoteText                |
+|-----+--------------+------------+------------+----------+-------------------------|
+| 3   | 2021-04-24   | 2021-04-24 | 2021-04-28 | 2        | This is sample entry 3. |
+| 2   | 2021-04-24   | 2021-04-24 | 2021-04-29 | 1        | This is sample entry 2. |
+| 1   | 2021-04-24   | None       | 2030-10-29 | None     | This is sample entry 1. |
++-----------------------------------------------------------------------------------+
+```
