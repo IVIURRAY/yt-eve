@@ -4,7 +4,7 @@ from rich.table import Table
 from rich import box
 import os.path
 from datetime import date
-import pathlib
+from eve.config import NOTE_DEFAULT_PATH
 
 
 class Note:
@@ -16,7 +16,7 @@ class Note:
         # Highlight color 2 for outputs ==> Warnings (e. g. reached due dates etc.)
         self.color2 = 'bright_red'
         # Path to note-file
-        self.note_file = os.path.join(pathlib.Path.home(), '.kirk_note.json')
+        self.note_file = NOTE_DEFAULT_PATH
         # Check if note-file exists and if not create and populate it with sample data
         if not os.path.isfile(self.note_file):
             self.touch = '''
@@ -133,9 +133,10 @@ class Note:
                 self.console.log(f'No note found for given key [{self.color}]{key}[/]...')
                 return
             for item_key, value in kwargs.items():
-                self.note_data[key][item_key] = value
-                edit_counter += 1
-                self.console.log(f'{item_key} of key [{self.color}]{key}[/] changed to [{self.color}]{value}[/]...')
+                if value is not None:
+                    self.note_data[key][item_key] = value
+                    edit_counter += 1
+                    self.console.log(f'{item_key} of key [{self.color}]{key}[/] changed to [{self.color}]{value}[/]...')
             if edit_counter == 0:
                 self.console.log(f'No values of key [{self.color}]{key}[/] changed...')
             else:
