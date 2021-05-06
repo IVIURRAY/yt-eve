@@ -14,9 +14,9 @@ class Note:
         # Highlight color 1 for outputs ==> Affected objects (e. g. files, properties etc.)
         self.color = 'bold dodger_blue1'
         # Highlight color 2 for outputs ==> Warnings (e. g. reached due dates etc.)
-        self.color2 = 'deep_pink2'
+        self.color2 = 'bright_red'
         # Path to note-file
-        self.note_file = os.path.join(pathlib.Path.home(), '.eve_note.json')
+        self.note_file = os.path.join(pathlib.Path.home(), '.kirk_note.json')
         # Check if note-file exists and if not create and populate it with sample data
         if not os.path.isfile(self.note_file):
             self.touch = '''
@@ -110,11 +110,11 @@ class Note:
         else:
             # Delete key value from note-data for given key
             try:
-                del self.note_data[key]
+                self.note_data.pop(key)
                 self.console.log(f'Key [{self.color}]{key}[/] deleted...')
                 # Assign new keys to note-data
                 new_keys = list()
-                for i in range(len(self.note_data)):
+                for i, note in enumerate(self.note_data):
                     new_keys.append(str(i + 1))
                 self.note_data = dict(zip(new_keys, list(self.note_data.values())))
                 self.console.log(f'New enumeration for note-data applied...')
@@ -129,29 +129,17 @@ class Note:
         else:
             # Edit values for given key
             edit_counter = 0
-            try:
-                self.note_data[key]['DueDate'] = kwargs['DueDate']
+            if key not in self.note_data:
+                self.console.log(f'No note found for given key [{self.color}]{key}[/]...')
+                return
+            for item_key, value in kwargs.items():
+                self.note_data[key][item_key] = value
                 edit_counter += 1
-                prop = kwargs['DueDate']
-                self.console.log(f'DueDate of key [{self.color}]{key}[/] changed to [{self.color}]\'{prop}\'[/]...')
-            except KeyError:
-                self.console.log(f'DueDate of key [{self.color}]{key}[/] not changed...')
-            try:
-                self.note_data[key]['Priority'] = kwargs['Priority']
-                edit_counter += 1
-                prop = kwargs['Priority']
-                self.console.log(f'Priority of key [{self.color}]{key}[/] changed to [{self.color}]\'{prop}\'[/]...')
-            except KeyError:
-                self.console.log(f'Priority of key [{self.color}]{key}[/] not changed...')
-            try:
-                self.note_data[key]['NoteText'] = kwargs['NoteText']
-                edit_counter += 1
-                prop = kwargs['NoteText']
-                self.console.log(f'NoteText of key [{self.color}]{key}[/] changed to [{self.color}]\'{prop}\'[/]...')
-            except KeyError:
-                self.console.log(f'NoteText of key [{self.color}]{key}[/] not changed...')
-            # Set EditDate and save note-data to note-file if an edit happened
-            if edit_counter > 0:
+                self.console.log(f'{item_key} of key [{self.color}]{key}[/] changed to [{self.color}]{value}[/]...')
+            if edit_counter == 0:
+                self.console.log(f'No values of key [{self.color}]{key}[/] changed...')
+            else:
+                self.console.log(f'[{self.color}]{edit_counter}[/] values of key [{self.color}]{key}[/] changed...')
                 self.note_data[key]['EditDate'] = str(date.today())
                 self.save()
 
