@@ -9,7 +9,7 @@ class Context:
 
 
 @click.command()
-@click.option('-s', '--search', type=str, help='Searchstring for random quotes.')
+@click.option("-s", "--search", type=str, help="Searchstring for random quotes.")
 @click.pass_context
 def cli(ctx, search):
     """Output quotes."""
