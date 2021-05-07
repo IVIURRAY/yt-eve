@@ -22,9 +22,9 @@ def show(ctx):
 
 
 @cli.command()
-@click.option('-t', '--note_text', help='Note text.', required=True, type=str)
-@click.option('-d', '--due_date', help='Due date (YYYY-MM-DD).', required=False, type=str, default=None)
-@click.option('-p', '--priority', help='Priority.', required=False, type=int, default=None)
+@click.option("-t", "--note_text", help="Note text.", required=True, type=str)
+@click.option("-d", "--due_date", help="Due date (YYYY-MM-DD).", required=False, type=str, default=None)
+@click.option("-p", "--priority", help="Priority.", required=False, type=int, default=None)
 @click.pass_context
 def add(ctx, note_text, due_date, priority):
     """Add notes."""
@@ -33,7 +33,7 @@ def add(ctx, note_text, due_date, priority):
 
 
 @cli.command()
-@click.option('-k', '--key', help='Key of the note.', required=True, type=int)
+@click.option("-k", "--key", help="Key of the note.", required=True, type=int)
 @click.pass_context
 def delete(ctx, key):
     """Delete notes."""
@@ -42,10 +42,10 @@ def delete(ctx, key):
 
 
 @cli.command()
-@click.option('-k', '--key', help='Key of the note.', required=True, type=int)
-@click.option('-d', '--due_date', help='Due date (YYYY-MM-DD).', required=False, type=str)
-@click.option('-p', '--priority', help='Priority.', required=False, type=int)
-@click.option('-t', '--note_text', help='Note text.', required=False, type=str)
+@click.option("-k", "--key", help="Key of the note.", required=True, type=int)
+@click.option("-d", "--due_date", help="Due date (YYYY-MM-DD).", required=False, type=str)
+@click.option("-p", "--priority", help="Priority.", required=False, type=int)
+@click.option("-t", "--note_text", help="Note text.", required=False, type=str)
 @click.pass_context
 def edit(ctx, key, due_date=None, priority=None, note_text=None):
     """Edit notes."""

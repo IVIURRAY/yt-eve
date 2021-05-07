@@ -22,14 +22,14 @@ class CoinMarketCap:
     @staticmethod
     def filter_essential_data(data, coin, currency):
         return {
-            'source': 'Coin Market Cap',
-            'symbol': data[coin]["symbol"],
-            'name': data[coin]["name"],
-            'total_supply': data[coin]["total_supply"],
-            'value': f"{data[coin]['quote'][currency]['price']}",
-            'currency':  currency,
-            'percent_change_24h': data[coin]["quote"][currency]["percent_change_24h"],
-            'market_cap': data[coin]["quote"][currency]["market_cap"]
+            "source": "Coin Market Cap",
+            "symbol": data[coin]["symbol"],
+            "name": data[coin]["name"],
+            "total_supply": data[coin]["total_supply"],
+            "value": f"{data[coin]['quote'][currency]['price']}",
+            "currency": currency,
+            "percent_change_24h": data[coin]["quote"][currency]["percent_change_24h"],
+            "market_cap": data[coin]["quote"][currency]["market_cap"],
         }
 
     def price(self, coin, currency):
@@ -45,16 +45,16 @@ class Gecko:
     def filter_essential_data(data, coin, currency):
         currency = currency.lower()
         return {
-            'source': 'Gecko',
-            'name': coin,
-            'currency': currency,
-            'value': float(data[currency]),
-            'percent_change_24h': data[f"{currency}_24h_change"],
-            'market_cap': data[f"{currency}_market_cap"]
+            "source": "Gecko",
+            "name": coin,
+            "currency": currency,
+            "value": float(data[currency]),
+            "percent_change_24h": data[f"{currency}_24h_change"],
+            "market_cap": data[f"{currency}_market_cap"],
         }
 
     def price(self, coin, currency):
         result = self.api.get_price(
-            ids=coin, vs_currencies=currency, include_market_cap='true', include_24hr_change='true'
+            ids=coin, vs_currencies=currency, include_market_cap="true", include_24hr_change="true"
         )
         return self.filter_essential_data(result[coin.lower()], coin=coin, currency=currency)

@@ -21,5 +21,4 @@ def format_int_from_str(int_number: str):
 
 
 def get_time_diff(date_one: str, date_two: str):
-    return datetime.fromisoformat(date_one).astimezone(pytz.UTC) - datetime.fromisoformat(date_two).astimezone(
-        pytz.UTC)
+    return datetime.fromisoformat(date_one).astimezone(pytz.UTC) - datetime.fromisoformat(date_two).astimezone(pytz.UTC)

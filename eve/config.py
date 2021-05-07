@@ -21,10 +21,12 @@ CURRENCY = os.environ.get("CURRENCY", "<YOUR-DEFAULT-CURRENCY>")
 
 # Calendar
 DEFAULT_CALENDAR_EVENTS_NUMBER = os.environ.get("DEFAULT_EVENTS_NUMBER", "<YOUR-PREFERRED-NUMBER-OF-EVENTS-TO-DISPLAY>")
-PATH_TO_CALENDAR_API_CRED = os.environ.get("PATH_TO_CALENDAR_API_CRED", "<PATH-TO-GOOGLE-CALENDAR-API-CRED-DOT-JSON-FILE>")
+PATH_TO_CALENDAR_API_CRED = os.environ.get(
+    "PATH_TO_CALENDAR_API_CRED", "<PATH-TO-GOOGLE-CALENDAR-API-CRED-DOT-JSON-FILE>"
+)
 
 # Quote Config
-QU_SEARCH = 'Tolkien'
+QU_SEARCH = "Tolkien"
 
 # Note
-NOTE_DEFAULT_PATH = os.path.join(pathlib.Path.home(), '.eve_note.json')
+NOTE_DEFAULT_PATH = os.path.join(pathlib.Path.home(), ".eve_note.json")

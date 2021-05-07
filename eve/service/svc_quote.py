@@ -13,7 +13,5 @@ class Quote:
         if not results:
             return ""
         random_quote = random.choice(results)["quote"]
-        wrapped_quote = "\n".join(
-            wrap(shorten(random_quote, 280 - 4, placeholder="..."), 70)
-        )
+        wrapped_quote = "\n".join(wrap(shorten(random_quote, 280 - 4, placeholder="..."), 70))
         return wrapped_quote
