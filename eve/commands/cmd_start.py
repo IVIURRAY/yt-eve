@@ -31,13 +31,13 @@ def get_default_values(collect: bool = False) -> Union[None, Dict[str, Dict[str,
 
 
 @click.command()
-@click.option("-l", "language", type=str, help="The language used in the project")
-@click.option("-n", "name", type=str, help="The name of the project")
+@click.option("-l", "--language", type=str, help="The language used in the project")
+@click.option("-n", "--name", type=str, help="The name of the project")
 @click.option("--license", type=str, help="The LICENSE to use", default="mit", show_default=True)
-@click.option("-d", "--directory", type=str, help="The directory to create all the starter files.", default=".", show_default=True)
-@click.option("--env", help="Create a virtual evn for Python projets", is_flag=True)
+@click.option("-d", "--directory", type=str, help="The directory to create all the starter files and folders.", default=".", show_default=True)
+@click.option("--env", help="Create a virtual env for Python projects", is_flag=True)
 @click.option("--set-default", help="Add default values", is_flag=True)
-@click.option("-y", type=bool, is_flag=True, help="Use default values.")
+@click.option("-y", type=bool, is_flag=True, help="Use default values while making the starter files.")
 @click.option("--no-git", type=bool, is_flag=True, default=False, help="Do not initialize a git repo", show_default=False)
 def cli(language: str, name: str, directory: str, license: str, y: bool, env: bool, set_default: bool, no_git: bool) -> None:
     """Start a new project in any language"""

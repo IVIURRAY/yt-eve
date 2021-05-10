@@ -102,7 +102,8 @@ Below is a list of the currently support API commands.
 * [`eve crypto`](#crypto) - Crypto currency information.
 * [`eve cal`](#calendar) - Google calendar utility.
 * [`eve quote`](#quote) - Generate random book-quotes.
-* [`eve note`](#note) - A small notebook with due date and priority functionality
+* [`eve note`](#note) - A small notebook with due date and priority functionality.
+* [`eve start`](#start) - Quickly setup starter file for any programming language.
 
 ## Football
 The `football` command uses [openfootball](https://github.com/openfootball/football.json) under the hood.
@@ -558,3 +559,37 @@ The show command is also executed automaticaly after adding, deleting or editing
 | 1   | 2021-04-24   | None       | 2030-10-29 | None     | This is sample entry 1. |
 +-----------------------------------------------------------------------------------+
 ```
+
+## Start
+
+The `start` command in simple terms is "`npm init`" but for all languages. It allows the user to quickly create all the stater files and folders necessary to start a project, some these files include, `.gitignore`, `LICENSE`, `setup.py`(Python).. etc.
+
+Currently supported options are listed below.
+
+```commandline
+Usage: eve start [OPTIONS]
+
+  Start a new project in any language
+
+Options:
+  -l, --language TEXT   The language used in the project
+  -n, --name TEXT       The name of the project
+  --license TEXT        The LICENSE to use  [default: mit]
+  -d, --directory TEXT  The directory to create all the starter files and folders.
+                        [default: .]
+
+  --env                 Create a virtual env for Python projects
+  --set-default         Add default values
+  -y                    Use default values while making the starter files.
+  --no-git              Do not initialize a git repo
+  --help                Show this message and exit.
+
+```
+
+The default values include the <b>author name</b> and <b>author email</b> for the project. This can be set using the following command.
+
+```bash
+eve start --set-default  # set the default vales
+```
+Currently supported languages are.
+  * Python
