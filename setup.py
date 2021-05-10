@@ -11,11 +11,12 @@ def read_requirements():
 
 setup(
     name='eve',
-    version='0.2.0',
+    version='0.3.0',
     packages=find_packages(),
     include_package_date=True,
     install_requires=read_requirements(),
-    package_data = {"eve": ["meta/start/*.json", "meta/start/licenses/*.txt", "meta/start/templates/*.json"]},
+    package_data={"eve": ["meta/start/*.json",
+                          "meta/start/licenses/*.txt", "meta/start/templates/*.json"]},
     entry_points="""
         [console_scripts]
         eve=eve.cli:cli
