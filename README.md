@@ -587,9 +587,8 @@ Options:
                         folders.  [default: .]
 
   --env                 Create a virtual env for Python projects
-  --set-default         Add default values
   --no-git              Do not initialize a git repo
-  --help                Show this message and exit.
+  --help   
 ```
 
 Some values like <b>author name</b> and <b>Author Email</b> which are used some times used the setup files and in some LICENSE file can be set in the [config.py](eve/config.py) file
