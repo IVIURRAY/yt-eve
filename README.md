@@ -34,8 +34,12 @@ There are two ways it can be done, see below.
 `os.environ.get("ENV", "default")` reads the env var `"ENV"` and takes `"default"` if this variable is not set.
 
  config.py example
-```
+```python
 import os
+
+# START API
+AUTHOR_NAME = os.environ.get("AUTHOR_NAME", "johndoe")
+AUTHOR_EMAIL = os.environ.get("AUTHOR_EMAIL", "johndoe@example.com")
 
 # Weather API
 WX_API_KEY = os.environ.get("WX_API_KEY", "e5209303a83828u2eako7c849302d2j2")
@@ -83,6 +87,10 @@ export CURRENCY=your_preferred_default_currency_to_convert_to # EUR
 #Calendar
 export DEFAULT_EVENTS_NUMBER=10
 export PATH_TO_CALENDAR_API_CRED="/Users/john/creds/credentials.json"
+
+#Start
+export AUTHOR_NAME=your_name  # johndoe
+export AUTHOR_EMAIL=your_email_address  # johndoe@example.com
 ```
 
 export env variables in this file on the startup of the shell.
@@ -575,21 +583,38 @@ Options:
   -l, --language TEXT   The language used in the project
   -n, --name TEXT       The name of the project
   --license TEXT        The LICENSE to use  [default: mit]
-  -d, --directory TEXT  The directory to create all the starter files and folders.
-                        [default: .]
+  -d, --directory TEXT  The directory to create all the starter files and
+                        folders.  [default: .]
 
   --env                 Create a virtual env for Python projects
   --set-default         Add default values
-  -y                    Use default values while making the starter files.
   --no-git              Do not initialize a git repo
   --help                Show this message and exit.
-
 ```
 
-The default values include the <b>author name</b> and <b>author email</b> for the project. This can be set using the following command.
+Some values like <b>author name</b> and <b>Author Email</b> which are used some times used the setup files and in some LICENSE file can be set in the [config.py](eve/config.py) file
 
-```bash
-eve start --set-default  # set the default vales
-```
 Currently supported languages are.
   * Python
+
+___example___
+
+ * Create a python project named ade.
+ ```commandline
+ eve start -l python -n ade
+ ```
+
+ * Create python project named ade without initializing a git repo.
+ ```commandline
+ eve start -l python -n ade --no-git
+ ```
+
+ * Create a python project named ade in directory names `test`
+ ```commandline
+ eve start -l python -n ade -d test
+ ```
+
+ * Create a python project named ade and create a new venv(assuming you have virtualenv installed)
+ ```bash
+ eve start -l python -n ade --env  # since --no-git is not passed this will also initialize a git repo.
+ ```

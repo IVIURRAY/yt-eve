@@ -9,7 +9,7 @@ import json
 
 from typing import Dict, List
 
-# import click
+import click
 import requests
 
 from eve.config import AUTHOR_NAME, AUTHOR_EMAIL, GITHUB_USER
