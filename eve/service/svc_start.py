@@ -1,12 +1,18 @@
 from pathlib import Path
+from ast import literal_eval
+from datetime import date
+
 import subprocess
 import sys
 import os
 import json
 
-import click
-
 from typing import Dict, List
+
+# import click
+import requests
+
+from eve.config import AUTHOR_NAME, AUTHOR_EMAIL, GITHUB_USER
 
 START_META = os.path.join(
     Path(os.path.dirname(__file__)).parent, "meta", "start")
@@ -15,13 +21,50 @@ LICENSES = os.path.join(START_META, "licenses")
 TEMPLATES = os.path.join(START_META, "templates")
 
 
+def get_license_list() -> List[str]:
+
+    try:
+        licenses = []
+        contents = requests.get("https://api.github.com/licenses").json()
+        for lic in contents:
+            licenses.append(lic["key"])
+
+        return licenses
+
+    except requests.exceptions.ConnectionError:
+        return []
+
+
+def license_content(name: str) -> str:
+    try:
+        contents = requests.get(
+            f"https://api.github.com/licenses/{name}").json()
+
+        contents = contents["body"]
+        contents = contents.replace("[year]", str(date.today().year))
+        contents = contents.replace("[fullname]", GITHUB_USER)
+        return contents
+
+    except requests.exceptions.ConnectionError:
+        return ""
+
+
+def gitignore_contents(lang: str) -> str:
+    try:
+        contents = requests.get(
+            f"https://api.github.com/gitignore/templates/{lang.capitalize()}").json()
+        return contents["source"]
+
+    except requests.exceptions.ConnectionError:
+        return ""
+
+
 def get_langs_and_licenses() -> Dict[str, List[str]]:
 
     langs = [j.replace(".json", "")
              for j in [l for _, _, l in os.walk(TEMPLATES)][0]]
 
-    lice = [j.replace(".txt", "")
-            for j in [l for _, _, l in os.walk(LICENSES)][0]]
+    lice = get_license_list()
 
     return {"langs": langs, "lice": lice}
 
@@ -37,45 +80,59 @@ class Start:
     def __init__(self) -> None:
         self.name: str = ""
         self.language: str = ""
-        self.author: str = ""
-        self.author_email: str = ""
+        self.author: str = AUTHOR_NAME
+        self.author_email: str = AUTHOR_EMAIL
         self.license: str = "mit"
         self.make_env: bool = False
         self.directory: str = "."
         self.git: bool = False
 
     def start_project(self) -> None:
-        _license = os.path.join(START_META, "licenses", f"{self.license}.txt")
-        template = os.path.join(START_META, "templates",
-                                f"{self.language}.json")
+        # load template
+        self.template = os.path.join(START_META, "templates",
+                                     f"{self.language}.json")
 
-        with open(template, "r") as f:
-            data = json.load(f)
+        with open(self.template, "r") as f:
+            self.data = json.load(f)
 
-        for _file in data["create-files"]:
+        # create source tree
+        tree = self.replace_project_name_src_directory()
+        self.create_src_directories(tree)
+
+        # add all the files
+        for _file in self.data["create-files"]:
+            _file = _file.replace("project-name", self.name)
             self.create_file(_file)
-            if _file in data["contents"]:
-                contents = data["contents"][_file]
-                if "{0}" in contents:
-                    contents = contents.format(
-                        self.name, self.author, self.author_email)  # check whether the text has format strings
+
+            # read the content of the file if available
+            if _file in self.data["contents"]:
+                contents = self.add_p_name_author_name_and_email(
+                    self.data["contents"][_file])  # adds the project name, author name and email if possible.
                 self.write_data(_file, contents)
 
-        # add license
-        try:
-            with open(_license, "r") as f:
-                self.write_data("LICENSE", f.read())
-        except FileNotFoundError:
-            pass
-        # create all the required folders
-        folders = {}
-        folders[self.name] = data["create-src-folders"]["project-name"]
-        self.create_src_directories(folders)
+        # add license and .gitignore
+        self.add_license()
+        self.add_gitignore()
 
+        # initialize git and create the venv
         if self.git:
             self.create_git_repo()
         if self.make_env:
             self.create_venv()
+
+    def add_license(self) -> None:
+        contents = license_content(self.license)
+        self.write_data("LICENSE", contents)
+
+    def add_gitignore(self) -> None:
+        contents = gitignore_contents(self.language)
+        self.write_data(".gitignore", contents)
+
+    def add_p_name_author_name_and_email(self, content: str) -> str:
+        content = content.replace("##project--name##", self.name)
+        content = content.replace("##author--name##", AUTHOR_NAME)
+        content = content.replace("##author--email##", AUTHOR_EMAIL)
+        return content
 
     def create_file(self, filename: str) -> None:
         Path(os.path.join(self.directory, filename)).touch()
@@ -90,6 +147,15 @@ class Start:
                 for inner_key in val.keys():
                     Path(os.path.join(self.directory, key, inner_key)).mkdir(
                         parents=True, exist_ok=True)
+                else:
+                    # means no nested directories
+                    Path(os.path.join(self.directory, key)).mkdir(
+                        parents=True, exist_ok=True)
+
+    def replace_project_name_src_directory(self):
+        data = str(self.data["create-src-folders"])
+        data = data.replace("project-name", self.name)
+        return literal_eval(data)
 
     def create_venv(self) -> None:
         if check_virtual_env_installed():
@@ -101,7 +167,3 @@ class Start:
 
     def create_git_repo(self) -> None:
         subprocess.run(["git", "init", self.directory], shell=True)
-
-
-if __name__ == "__main__":
-    check_virtual_env_installed()
