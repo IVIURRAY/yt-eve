@@ -31,6 +31,6 @@ rich>=10.1.0
 rsa==4.7.2
 six==1.15.0
 uritemplate==3.0.1
-urllib3==1.26.4
+urllib3==1.26.5
 wrapt==1.12.1
 pytest==6.2.3
